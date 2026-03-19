@@ -1,0 +1,16 @@
+{
+  "description": "SessionStart hook that loads chinese-classical skill content automatically",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks-handlers/session-start.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
