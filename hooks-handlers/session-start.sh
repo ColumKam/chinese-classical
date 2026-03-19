@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # SessionStart hook for chinese-classical plugin
-# Automatically injects skill content at session start
+# Automatically injects instruction content at session start
 
 set -euo pipefail
 
@@ -8,14 +8,14 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
 PLUGIN_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
-# Read SKILL.md content
-SKILL_FILE="${PLUGIN_ROOT}/SKILL.md"
-if [ ! -f "$SKILL_FILE" ]; then
+# Read INSTRUCTION.md content
+INSTRUCTION_FILE="${PLUGIN_ROOT}/INSTRUCTION.md"
+if [ ! -f "$INSTRUCTION_FILE" ]; then
     echo '{"hookSpecificOutput": {"hookEventName": "SessionStart", "additionalContext": ""}}'
     exit 0
 fi
 
-SKILL_CONTENT=$(cat "$SKILL_FILE" 2>&1 || echo "Error reading skill file")
+INSTRUCTION_CONTENT=$(cat "$INSTRUCTION_FILE" 2>&1 || echo "Error reading instruction file")
 
 # Read vocabulary.md content
 VOCAB_FILE="${PLUGIN_ROOT}/references/vocabulary.md"
@@ -43,14 +43,14 @@ escape_for_json() {
     printf '%s' "$output"
 }
 
-SKILL_ESCAPED=$(escape_for_json "$SKILL_CONTENT")
+INSTRUCTION_ESCAPED=$(escape_for_json "$INSTRUCTION_CONTENT")
 VOCAB_ESCAPED=$(escape_for_json "$VOCAB_CONTENT")
 
 # Build additional context
 ADDITIONAL_CONTEXT=""
 
-if [ -n "$SKILL_ESCAPED" ]; then
-    ADDITIONAL_CONTEXT="<important-reminder>\n${SKILL_ESCAPED}"
+if [ -n "$INSTRUCTION_ESCAPED" ]; then
+    ADDITIONAL_CONTEXT="<important-reminder>\n${INSTRUCTION_ESCAPED}"
     if [ -n "$VOCAB_ESCAPED" ]; then
         ADDITIONAL_CONTEXT="${ADDITIONAL_CONTEXT}\n\n---\n\n## 词汇参考\n\n${VOCAB_ESCAPED}"
     fi

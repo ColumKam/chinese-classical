@@ -2,7 +2,7 @@
   "name": "chinese-classical",
   "description": "全局行为修饰器，规定 Claude Code 以简洁实用风格的文言文进行思考，与用户交互时使用现代中文",
   "author": {
-    "name": "columpve",
-    "email": "columpve@example.com"
+    "name": "Colum Jin",
+    "email": "Colum Jin@163.com"
   }
 }
